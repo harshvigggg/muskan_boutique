@@ -1,0 +1,325 @@
+import React, { useState, useEffect } from 'react';
+import { ShoppingCart, User, Search, Menu, X, ChevronRight, Heart } from 'lucide-react';
+
+// Modernized Navbar Component
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <header className={`sticky top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}>
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between py-4">
+          {/* Logo */}
+          <div className="flex items-center">
+            <h1 className="text-2xl font-bold text-pink-600">Muskan Boutique</h1>
+          </div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex space-x-8">
+            <a href="#" className="text-gray-800 hover:text-pink-600 transition-colors font-medium">Home</a>
+            <a href="#" className="text-gray-800 hover:text-pink-600 transition-colors font-medium">Shop</a>
+            <a href="#" className="text-gray-800 hover:text-pink-600 transition-colors font-medium">Collections</a>
+            <a href="#" className="text-gray-800 hover:text-pink-600 transition-colors font-medium">About</a>
+            <a href="#" className="text-gray-800 hover:text-pink-600 transition-colors font-medium">Contact</a>
+          </nav>
+
+          {/* Action Icons */}
+          <div className="hidden md:flex items-center space-x-6">
+            <button className="text-gray-700 hover:text-pink-600 transition-colors">
+              <Search size={20} />
+            </button>
+            <button className="text-gray-700 hover:text-pink-600 transition-colors">
+              <User size={20} />
+            </button>
+            <button className="text-gray-700 hover:text-pink-600 transition-colors relative">
+              <ShoppingCart size={20} />
+              <span className="absolute -top-2 -right-2 bg-pink-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">3</span>
+            </button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button 
+            className="md:hidden text-gray-700"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden bg-white shadow-lg">
+          <div className="container mx-auto px-4 py-4">
+            <nav className="flex flex-col space-y-4">
+              <a href="#" className="text-gray-800 hover:text-pink-600 transition-colors py-2 font-medium">Home</a>
+              <a href="#" className="text-gray-800 hover:text-pink-600 transition-colors py-2 font-medium">Shop</a>
+              <a href="#" className="text-gray-800 hover:text-pink-600 transition-colors py-2 font-medium">Collections</a>
+              <a href="#" className="text-gray-800 hover:text-pink-600 transition-colors py-2 font-medium">About</a>
+              <a href="#" className="text-gray-800 hover:text-pink-600 transition-colors py-2 font-medium">Contact</a>
+
+              <div className="flex space-x-6 py-2">
+                <button className="text-gray-700 hover:text-pink-600 transition-colors">
+                  <Search size={20} />
+                </button>
+                <button className="text-gray-700 hover:text-pink-600 transition-colors">
+                  <User size={20} />
+                </button>
+                <button className="text-gray-700 hover:text-pink-600 transition-colors relative">
+                  <ShoppingCart size={20} />
+                  <span className="absolute -top-2 -right-2 bg-pink-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">3</span>
+                </button>
+              </div>
+            </nav>
+          </div>
+        </div>
+      )}
+    </header>
+  );
+};
+
+// Hero Section Component
+const HeroSection = () => {
+  return (
+    <section className="relative bg-gradient-to-r from-pink-50 to-purple-50 py-16 md:py-24">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col md:flex-row items-center">
+          <div className="md:w-1/2 mb-8 md:mb-0">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Discover Your <span className="text-pink-600">Unique</span> Style</h1>
+            <p className="text-lg text-gray-600 mb-8">Explore our new collection of carefully crafted attire that combines elegance with modern trends.</p>
+            <div className="flex space-x-4">
+              <button className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-md font-medium transition-colors duration-300 flex items-center">
+                Shop Now <ChevronRight size={18} className="ml-2" />
+              </button>
+              <button className="border border-gray-400 hover:border-pink-600 text-gray-700 hover:text-pink-600 px-6 py-3 rounded-md font-medium transition-colors duration-300">
+                View Collections
+              </button>
+            </div>
+          </div>
+          <div className="md:w-1/2">
+            <div className="relative">
+              <div className="bg-white p-4 rounded-lg shadow-lg">
+                <img src="/api/placeholder/600/800" alt="Fashion Model" className="rounded w-full h-auto" />
+              </div>
+              <div className="absolute -bottom-6 -left-6 bg-pink-100 p-4 rounded-lg shadow-md">
+                <div className="font-bold text-pink-600 text-lg">Summer Sale</div>
+                <div className="text-gray-800 font-medium">Up to 40% Off</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Featured Products Component
+const FeaturedProducts = () => {
+  const products = [
+    { id: 1, name: "Floral Summer Dress", price: 1299, category: "Dresses", image: "/api/placeholder/300/400" },
+    { id: 2, name: "Elegant Evening Gown", price: 2499, category: "Gowns", image: "/api/placeholder/300/400" },
+    { id: 3, name: "Casual Linen Shirt", price: 899, category: "Tops", image: "/api/placeholder/300/400" },
+    { id: 4, name: "Designer Denim Jeans", price: 1499, category: "Bottoms", image: "/api/placeholder/300/400" }
+  ];
+
+  return (
+    <section className="py-16 bg-white">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-800 mb-2">Featured Collection</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">Discover our handpicked selection of trending styles that combine comfort with elegance</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          {products.map(product => (
+            <div key={product.id} className="group">
+              <div className="relative overflow-hidden rounded-lg mb-4">
+                <img 
+                  src={product.image} 
+                  alt={product.name} 
+                  className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105" 
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <button className="bg-white text-pink-600 p-3 rounded-full shadow-md mx-2 hover:bg-pink-600 hover:text-white transition-colors duration-300">
+                    <ShoppingCart size={18} />
+                  </button>
+                  <button className="bg-white text-pink-600 p-3 rounded-full shadow-md mx-2 hover:bg-pink-600 hover:text-white transition-colors duration-300">
+                    <Heart size={18} />
+                  </button>
+                </div>
+                <div className="absolute top-2 right-2 bg-pink-600 text-white text-xs px-2 py-1 rounded">NEW</div>
+              </div>
+              <div className="text-center">
+                <p className="text-gray-500 text-sm mb-1">{product.category}</p>
+                <h3 className="font-medium text-gray-800 mb-1">{product.name}</h3>
+                <p className="text-pink-600 font-semibold">₹{product.price}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <button className="border border-pink-600 text-pink-600 hover:bg-pink-600 hover:text-white px-8 py-3 rounded-md font-medium transition-colors duration-300">
+            View All Products
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Categories Section
+const CategoriesSection = () => {
+  const categories = [
+    { name: "Dresses", image: "/api/placeholder/400/300", count: 45 },
+    { name: "Ethnic Wear", image: "/api/placeholder/400/300", count: 32 },
+    { name: "Western", image: "/api/placeholder/400/300", count: 28 }
+  ];
+
+  return (
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-800 mb-2">Shop By Category</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">Explore our wide range of categories to find exactly what you're looking for</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {categories.map((category, index) => (
+            <div key={index} className="relative group overflow-hidden rounded-lg shadow-md">
+              <img 
+                src={category.image} 
+                alt={category.name} 
+                className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6">
+                <h3 className="text-white text-xl font-semibold mb-1">{category.name}</h3>
+                <p className="text-pink-200 mb-4">{category.count} Products</p>
+                <button className="bg-white text-pink-600 px-4 py-2 rounded w-full max-w-xs transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                  Explore Collection
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Newsletter Component
+const Newsletter = () => {
+  return (
+    <section className="py-16 bg-pink-50">
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-gray-800 mb-2">Stay Updated</h2>
+          <p className="text-gray-600 mb-6">Subscribe to our newsletter to get updates on our latest collections and special offers</p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+            <input 
+              type="email" 
+              placeholder="Enter your email" 
+              className="px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-600 focus:border-transparent flex-grow"
+            />
+            <button className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-md font-medium transition-colors duration-300 whitespace-nowrap">
+              Subscribe
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Footer Component
+const Footer = () => {
+  return (
+    <footer className="bg-gray-900 text-gray-300">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 className="text-xl font-bold text-white mb-4">Muskan Boutique</h3>
+            <p className="mb-4">Your destination for premium fashion and elegant clothing that makes you stand out.</p>
+            <div className="flex space-x-4">
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">FB</div>
+              </a>
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">IG</div>
+              </a>
+              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center">TW</div>
+              </a>
+            </div>
+          </div>
+          
+          <div>
+            <h4 className="text-white font-medium mb-4">Quick Links</h4>
+            <ul className="space-y-2">
+              <li><a href="#" className="hover:text-pink-400 transition-colors">Home</a></li>
+              <li><a href="#" className="hover:text-pink-400 transition-colors">Shop</a></li>
+              <li><a href="#" className="hover:text-pink-400 transition-colors">About Us</a></li>
+              <li><a href="#" className="hover:text-pink-400 transition-colors">Contact</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 className="text-white font-medium mb-4">Customer Service</h4>
+            <ul className="space-y-2">
+              <li><a href="#" className="hover:text-pink-400 transition-colors">My Account</a></li>
+              <li><a href="#" className="hover:text-pink-400 transition-colors">Track Order</a></li>
+              <li><a href="#" className="hover:text-pink-400 transition-colors">Shipping Policy</a></li>
+              <li><a href="#" className="hover:text-pink-400 transition-colors">Returns & Exchanges</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 className="text-white font-medium mb-4">Contact Info</h4>
+            <address className="not-italic">
+              <p className="mb-2">123 Fashion Street, Design District</p>
+              <p className="mb-2">Mumbai, India</p>
+              <p className="mb-2">Phone: +91 98765 43210</p>
+              <p className="mb-2">Email: hello@muskanboutique.com</p>
+            </address>
+          </div>
+        </div>
+        
+        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+          <p>&copy; {new Date().getFullYear()} Muskan Boutique. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+// Main Component
+export default function App() {
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-grow">
+        <HeroSection />
+        <FeaturedProducts />
+        <CategoriesSection />
+        <Newsletter />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
