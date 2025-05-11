@@ -1,0 +1,43 @@
+/* Home.css */
+
+.home-container {
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(to bottom, #ffe6f0, #fff);
+  color: #333;
+}
+
+.client-section input {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.client-section button {
+  padding: 10px 20px;
+  background-color: #ff99cc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.client-section button:hover {
+  background-color: #ff66b2;
+}
+
+.ready-tokens ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.ready-tokens li {
+  margin: 5px 0;
+  padding: 10px;
+  background-color: #ffe6f0;
+  border: 1px solid #ff99cc;
+  border-radius: 5px;
+}
